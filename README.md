@@ -13,25 +13,18 @@
             document.getElementById(time).style.display = 'block';
         }
 
-        // Dados dos jogos gerados dinamicamente a partir dos dados reais
-        var resultados = {
-            "Fluminense": [
-                ["Botafogo", 2.5, 10],
-                ["Palmeiras", 1.7, 12]
-            ],
-            "Botafogo": [
-                ["Fluminense", 2.5, 10],
-                ["Palmeiras", 1.8, 11]
-            ],
-            "Palmeiras": [
-                ["Fluminense", 1.7, 12],
-                ["Botafogo", 1.8, 11]
-            ]
-            // Adicione mais times e seus resultados aqui
-        };
+        // Função para carregar os dados JSON e gerar o HTML
+        function loadJSON() {
+            fetch('resultados.json')
+                .then(response => response.json())
+                .then(data => {
+                    var resultados = data;
+                    generateHTML(resultados);
+                });
+        }
 
         // Função para gerar o HTML dinamicamente a partir dos dados dos resultados
-        function generateHTML() {
+        function generateHTML(resultados) {
             var container = document.getElementById('container');
             var buttonsDiv = document.createElement('div');
 
@@ -71,8 +64,8 @@
             }
         }
 
-        // Gerar HTML quando o documento estiver pronto
-        window.onload = generateHTML;
+        // Carregar os dados JSON quando o documento estiver pronto
+        window.onload = loadJSON;
     </script>
 </head>
 <body>
@@ -80,4 +73,3 @@
     <div id="container"></div>
 </body>
 </html>
-
