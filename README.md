@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
             document.getElementById(time).style.display = 'block';
         }
 
-        // Dados dos jogos (isso deve ser gerado dinamicamente a partir dos dados reais)
+        // Dados dos jogos gerados dinamicamente a partir dos dados reais
         var resultados = {
             "Fluminense": [
                 ["Botafogo", 2.5, 10],
