@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Média de Gols por Jogo</title>
+    <style>
+        .info { display: none; }
+        .info h2 { margin-top: 0; }
+        button { margin: 5px; }
+    </style>
     <script>
         // Função para exibir informações sobre um time específico
         function showInfo(time) {
@@ -28,40 +33,46 @@
             var container = document.getElementById('container');
             var buttonsDiv = document.createElement('div');
 
+            // Criar um conjunto de times para garantir que os botões sejam únicos
+            var timesSet = new Set();
+
+            // Preencher o conjunto de times
+            resultados.forEach(item => {
+                timesSet.add(item.Time);
+            });
+
             // Criar botões para cada time
-            for (var time in resultados) {
+            timesSet.forEach(time => {
                 var button = document.createElement('button');
                 button.textContent = time;
-                button.onclick = (function(time) {
-                    return function() {
-                        showInfo(time);
-                    };
-                })(time);
+                button.onclick = function() {
+                    showInfo(time);
+                };
                 buttonsDiv.appendChild(button);
-            }
+            });
 
             container.appendChild(buttonsDiv);
 
             // Criar divs com informações para cada time
-            for (var time in resultados) {
+            timesSet.forEach(time => {
                 var infoDiv = document.createElement('div');
                 infoDiv.id = time;
                 infoDiv.className = 'info';
-                infoDiv.style.display = 'none';
 
                 var title = document.createElement('h2');
                 title.textContent = time;
                 infoDiv.appendChild(title);
 
-                var results = resultados[time];
-                for (var i = 0; i < results.length; i++) {
-                    var p = document.createElement('p');
-                    p.textContent = 'Média de gols por partida contra ' + results[i][0] + ': ' + results[i][1].toFixed(2) + ' (Total de jogos: ' + results[i][2] + ')';
-                    infoDiv.appendChild(p);
-                }
+                resultados.forEach(item => {
+                    if (item.Time === time) {
+                        var p = document.createElement('p');
+                        p.textContent = 'Média de gols por partida contra ' + item.Adversário + ': ' + item['Média de Gols por Partida'] + ' (Total de jogos: ' + item['Total de Jogos'] + ')';
+                        infoDiv.appendChild(p);
+                    }
+                });
 
                 container.appendChild(infoDiv);
-            }
+            });
         }
 
         // Carregar os dados JSON quando o documento estiver pronto
